@@ -1,34 +1,32 @@
-/*
-this file implements the logic for processing packets
-it connects the queue with actual operations like add, process and stats
-*/
+// this file implements the logic for processing packets
+// it connects the queue with actual operations like add, process, and stats
 
 #include "NetworkProcessor.h"
 
 // constructor initializes counters to zero
-NetworkProcessor::NetworkProcessor(){
+NetworkProcessor::NetworkProcessor() {
     totalProcessed = 0;
-    totalLatency = 0
+    totalLatency = 0;
 }
 
 // adds a packet to the queue
-void NetworkProcessor::addPacket(Packet* packet){
+void NetworkProcessor::addPacket(Packet* packet) {
     // insert the packet into the queue
-    queue.enqueue((packet));
+    queue.enqueue(packet);
 
     cout << "packet added to queue\n";
 }
 
 // processes the next packet in the queue
-void NetworkProcessor::processPacket(int currentTime){
+void NetworkProcessor::processPacket(int currentTime) {
     // check if queue is empty before processing
-    if(queue.isEmpty()){
+    if (queue.isEmpty()) {
         cout << "no packets to process\n";
         return;
     }
 
     // remove the front packet from the queue
-    Packet *p = queue.dequeue();
+    Packet* p = queue.dequeue();
 
     // calculate how long the packet waited in the queue
     int latency = currentTime - p->getArrivalTime();
@@ -58,7 +56,7 @@ void NetworkProcessor::showStats() {
     }
 }
 
-// display queue contents (basic view)
+// optional: display queue contents (basic view)
 void NetworkProcessor::displayQueue() {
     cout << "current queue: ";
     queue.display();
